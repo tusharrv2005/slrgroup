@@ -2,20 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SLR Group</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .image-container {
+      aspect-ratio: 4 / 3; /* You can adjust this ratio */
+    }
+  </style>
 </head>
 <body class="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white min-h-screen flex flex-col">
   
-  <!-- NAVBAR -->
   <header class="flex items-center justify-between px-6 py-4 bg-white shadow">
     <div class="flex items-center space-x-3">
-      <img src="images/logo.png" alt="SLR Logo" class="h-12 w-12 rounded-full border" />
+      <img src="https://scontent.flko10-1.fna.fbcdn.net/v/t39.30808-6/513652818_10068318879920238_5901649802532571552_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=l9rwHlGgSRwQ7kNvwG70Awl&_nc_oc=AdlfLyQZj5bjUe8w0Ixp4LXbRWs10dUfQob5BzyAk1hspEr4ZySWiizv1eTC-26vEJaH9gMwLBfelnYU2FZ2vieT&_nc_zt=23&_nc_ht=scontent.flko10-1.fna&_nc_gid=SzV6el1PAegrBrsRjM8nWw&oh=00_Afbjt_pkoW6-XTt7HoJlU7DpqQwkWdlrPa8eAQOCEPU1qg&oe=68C4D633" alt="SLR Logo" class="h-12 w-12 rounded-full border" />
       <span class="text-2xl font-bold text-indigo-700">SLR Group</span>
     </div>
   </header>
 
-  <!-- HERO -->
   <section class="flex-1 flex flex-col items-center justify-center text-center px-4 py-16 bg-gradient-to-br from-indigo-600 to-purple-700">
     <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
       Welcome to <span class="text-yellow-300">SLR Group</span>
@@ -24,14 +28,18 @@
       Healthcare, Education & Celebrations - All at one place.
     </p>
     
-    <!-- PHOTO GRID -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full px-6 mb-10">
-      <img src="hospital.jpg" alt="Hospital" class="rounded-2xl shadow-lg hover:scale-105 transition" />
-      <img src="school.jpg" alt="School" class="rounded-2xl shadow-lg hover:scale-105 transition" />
-      <img src="palace.jpg" alt="Palace" class="rounded-2xl shadow-lg hover:scale-105 transition" />
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-8xl w-full px-6 mb-10">
+      <div class="rounded-2xl shadow-lg hover:scale-105 transition overflow-hidden">
+        <img src="https://scontent.flko10-1.fna.fbcdn.net/v/t39.30808-6/510801264_10070464229705703_3485152977545152223_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_ohc=1JSkdwVRpNUQ7kNvwFY03Lx&_nc_oc=AdmFPNCMoJ3kV8_TXMVPLpXn23NA0VIxlU9vEUbFubv2qALkaEgnAyAwviQN-3vBzbyQyMrQ-AzQv-tpOt5Cm6OO&_nc_zt=23&_nc_ht=scontent.flko10-1.fna&_nc_gid=NEeycUS2E2KHQel3aEUu5w&oh=00_AfZJP2N6UPkxRX19VI5-oVpTlG5Pzzw6orLpVpMUjctk_A&oe=68C4B2D8" alt="Hospital" class="w-full h-full object-cover" />
+      </div>
+      <div class="rounded-2xl shadow-lg hover:scale-105 transition overflow-hidden">
+        <img src="https://scontent.flko4-1.fna.fbcdn.net/v/t39.30808-6/512013094_10067656036653189_3799020070276581995_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=833d8c&_nc_ohc=hTBISWiWm30Q7kNvwEro-sa&_nc_oc=AdlvUbzetAqPW5A7m9D_nATUbB8lrSBqyqrFuh03oLaOXTSfAR6syvGRecBqXUSWYjI&_nc_zt=23&_nc_ht=scontent.flko4-1.fna&_nc_gid=3soXL4SL8L7qfTiwgAG_JQ&oh=00_Afbz91irv074hYDWMrmsjtUdw8ySo5_WxOCpDhL1AYjmVA&oe=68C4C9A7" alt="School" class="w-full h-full object-cover" />
+      </div>
+      <div class="rounded-2xl shadow-lg hover:scale-105 transition overflow-hidden">
+        <img src="https://scontent.flko4-1.fna.fbcdn.net/v/t39.30808-6/513907801_10068299356588857_9000195654374162871_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_ohc=XA58QKgL05wQ7kNvwFgwIaE&_nc_oc=AdlaVNXZJftjSTbJ5KqFXn07lHumUvWAa1J6JQmxP7Bb1nBYHu9tWue_C_tt_AXS16Q&_nc_zt=23&_nc_ht=scontent.flko4-1.fna&_nc_gid=V9sCy5GNMhQEee59HEoAXg&oh=00_AfYSIQtWrcfLWZFeHDg5pXw-8KcQiwLNuDZbcyo1Iis7Pg&oe=68C4B23D" alt="Palace" class="w-full h-full object-cover" />
+      </div>
     </div>
 
-    <!-- SERVICE CARDS -->
     <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
       <a href="hospital.html" class="p-6 bg-white text-blue-700 rounded-2xl shadow-xl hover:scale-105 transition transform">
         <div class="text-4xl mb-3">🏥</div>
@@ -51,7 +59,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="bg-white text-slate-700 py-6 text-center">
     <p>&copy; 2025 SLR Group. All rights reserved.</p>
   </footer>
@@ -64,59 +71,65 @@
     const schoolForm = document.getElementById("schoolForm");
     const palaceForm = document.getElementById("palaceForm");
 
-    select.addEventListener("change", () => {
-      hospitalForm.classList.add("hidden");
-      schoolForm.classList.add("hidden");
-      palaceForm.classList.add("hidden");
+    if (select) {
+        select.addEventListener("change", () => {
+        hospitalForm.classList.add("hidden");
+        schoolForm.classList.add("hidden");
+        palaceForm.classList.add("hidden");
 
-      if (select.value === "hospital") hospitalForm.classList.remove("hidden");
-      if (select.value === "school") schoolForm.classList.remove("hidden");
-      if (select.value === "palace") palaceForm.classList.remove("hidden");
-    });
+        if (select.value === "hospital") hospitalForm.classList.remove("hidden");
+        if (select.value === "school") schoolForm.classList.remove("hidden");
+        if (select.value === "palace") palaceForm.classList.remove("hidden");
+        });
+    }
 
     // Hospital Form Submit
-    hospitalForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = Object.fromEntries(new FormData(hospitalForm).entries());
-      const res = await fetch(`${API_BASE}/api/hospital/appointments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      document.getElementById("hospitalMsg").innerText = data.message;
-      hospitalForm.reset();
-    });
+    if (hospitalForm) {
+        hospitalForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = Object.fromEntries(new FormData(hospitalForm).entries());
+        const res = await fetch(`${API_BASE}/api/hospital/appointments`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+        document.getElementById("hospitalMsg").innerText = data.message;
+        hospitalForm.reset();
+        });
+    }
 
     // School Form Submit
-    schoolForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = Object.fromEntries(new FormData(schoolForm).entries());
-      const res = await fetch(`${API_BASE}/api/school/enquiries`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      document.getElementById("schoolMsg").innerText = data.message;
-      schoolForm.reset();
-    });
+    if (schoolForm) {
+        schoolForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = Object.fromEntries(new FormData(schoolForm).entries());
+        const res = await fetch(`${API_BASE}/api/school/enquiries`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+        document.getElementById("schoolMsg").innerText = data.message;
+        schoolForm.reset();
+        });
+    }
 
     // Palace Form Submit
-    palaceForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = Object.fromEntries(new FormData(palaceForm).entries());
-      const res = await fetch(`${API_BASE}/api/palace/bookings`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      document.getElementById("palaceMsg").innerText = data.message;
-      palaceForm.reset();
-    });
+    if (palaceForm) {
+        palaceForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = Object.fromEntries(new FormData(palaceForm).entries());
+        const res = await fetch(`${API_BASE}/api/palace/bookings`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        });
+        const data = await res.json();
+        document.getElementById("palaceMsg").innerText = data.message;
+        palaceForm.reset();
+        });
+    }
   </script>
-</body>
-</html>
 </body>
 </html>
