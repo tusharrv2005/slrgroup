@@ -55,5 +55,68 @@
   <footer class="bg-white text-slate-700 py-6 text-center">
     <p>&copy; 2025 SLR Group. All rights reserved.</p>
   </footer>
+  <script>
+    // 👇 Yaha backend ka Render URL daalo
+    const API_BASE = "https://slrgroup-backend.onrender.com";
+
+    const select = document.getElementById("serviceSelect");
+    const hospitalForm = document.getElementById("hospitalForm");
+    const schoolForm = document.getElementById("schoolForm");
+    const palaceForm = document.getElementById("palaceForm");
+
+    select.addEventListener("change", () => {
+      hospitalForm.classList.add("hidden");
+      schoolForm.classList.add("hidden");
+      palaceForm.classList.add("hidden");
+
+      if (select.value === "hospital") hospitalForm.classList.remove("hidden");
+      if (select.value === "school") schoolForm.classList.remove("hidden");
+      if (select.value === "palace") palaceForm.classList.remove("hidden");
+    });
+
+    // Hospital Form Submit
+    hospitalForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = Object.fromEntries(new FormData(hospitalForm).entries());
+      const res = await fetch(`${API_BASE}/api/hospital/appointments`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      document.getElementById("hospitalMsg").innerText = data.message;
+      hospitalForm.reset();
+    });
+
+    // School Form Submit
+    schoolForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = Object.fromEntries(new FormData(schoolForm).entries());
+      const res = await fetch(`${API_BASE}/api/school/enquiries`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      document.getElementById("schoolMsg").innerText = data.message;
+      schoolForm.reset();
+    });
+
+    // Palace Form Submit
+    palaceForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = Object.fromEntries(new FormData(palaceForm).entries());
+      const res = await fetch(`${API_BASE}/api/palace/bookings`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      document.getElementById("palaceMsg").innerText = data.message;
+      palaceForm.reset();
+    });
+  </script>
+</body>
+</html>
 </body>
 </html>
