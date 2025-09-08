@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SLR Public School</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- NAVBAR -->
+  <header class="bg-green-700 text-white p-4 text-center text-2xl font-bold">
+    SLR Public School
+  </header>
+
+  <!-- FORM -->
+  <main class="flex-1 flex items-center justify-center p-6">
+    <form id="schoolForm" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full space-y-4">
+      <h2 class="text-2xl font-bold text-center mb-4">Admission Enquiry</h2>
+      <input type="text" name="parent" placeholder="Parent Name" class="p-3 border rounded w-full" required>
+      <input type="text" name="student" placeholder="Student Name" class="p-3 border rounded w-full" required>
+      <input type="number" name="grade" placeholder="Grade Applying For" class="p-3 border rounded w-full" required>
+      <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-2xl w-full">
+        Submit Enquiry
+      </button>
+      <p id="schoolMsg" class="text-green-600 font-semibold text-center"></p>
+    </form>
+  </main>
+
+  <footer class="bg-white text-gray-700 text-center py-4">
+    &copy; 2025 SLR Group. All rights reserved.
+  </footer>
+
+  <script>
+    const API_BASE = "http://localhost:5000";
+    const form = document.getElementById("schoolForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = Object.fromEntries(new FormData(form).entries());
+      const res = await fetch(`${API_BASE}/api/school/enquiries`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      document.getElementById("schoolMsg").innerText = data.message;
+      form.reset();
+    });
+  </script>
+</body>
+</html>

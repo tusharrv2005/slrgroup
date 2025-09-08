@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SLR Group</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 text-white min-h-screen flex flex-col">
+  
+  <!-- NAVBAR -->
+  <header class="flex items-center justify-between px-6 py-4 bg-white shadow">
+    <div class="flex items-center space-x-3">
+      <img src="images/logo.png" alt="SLR Logo" class="h-12 w-12 rounded-full border" />
+      <span class="text-2xl font-bold text-indigo-700">SLR Group</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="flex-1 flex flex-col items-center justify-center text-center px-4 py-16 bg-gradient-to-br from-indigo-600 to-purple-700">
+    <h1 class="text-4xl md:text-6xl font-extrabold mb-4">
+      Welcome to <span class="text-yellow-300">SLR Group</span>
+    </h1>
+    <p class="text-lg md:text-xl text-white/90 max-w-2xl mb-8">
+      Healthcare, Education & Celebrations - All at one place.
+    </p>
+    
+    <!-- PHOTO GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full px-6 mb-10">
+      <img src="hospital.jpg" alt="Hospital" class="rounded-2xl shadow-lg hover:scale-105 transition" />
+      <img src="school.jpg" alt="School" class="rounded-2xl shadow-lg hover:scale-105 transition" />
+      <img src="palace.jpg" alt="Palace" class="rounded-2xl shadow-lg hover:scale-105 transition" />
+    </div>
+
+    <!-- SERVICE CARDS -->
+    <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <a href="hospital.html" class="p-6 bg-white text-blue-700 rounded-2xl shadow-xl hover:scale-105 transition transform">
+        <div class="text-4xl mb-3">🏥</div>
+        <h3 class="text-xl font-bold">Shri Lalaram Hospital</h3>
+        <p class="text-sm text-slate-600">Book doctor appointments online</p>
+      </a>
+      <a href="school.html" class="p-6 bg-white text-green-700 rounded-2xl shadow-xl hover:scale-105 transition transform">
+        <div class="text-4xl mb-3">🎓</div>
+        <h3 class="text-xl font-bold">SLR Public School</h3>
+        <p class="text-sm text-slate-600">Submit admission enquiries</p>
+      </a>
+      <a href="palace.html" class="p-6 bg-white text-purple-700 rounded-2xl shadow-xl hover:scale-105 transition transform">
+        <div class="text-4xl mb-3">🏰</div>
+        <h3 class="text-xl font-bold">Shri Lalaram Palace</h3>
+        <p class="text-sm text-slate-600">Book venue for events</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-white text-slate-700 py-6 text-center">
+    <p>&copy; 2025 SLR Group. All rights reserved.</p>
+  </footer>
+</body>
+</html>
