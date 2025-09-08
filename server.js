@@ -47,5 +47,6 @@ app.get("/api/admin/all", authenticate, (req, res) => {
   res.json(db);
 });
 
-// Start Server
-app.listen(5000, () => console.log("✅ Server running on http://localhost:5000"));
+// ✅ Start Server (Render ke liye dynamic port)
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
