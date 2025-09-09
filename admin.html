@@ -1,198 +1,96 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Admin Dashboard - SLR Group</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .active-tab {
-            border-bottom: 2px solid theme('colors.indigo.600');
-            color: theme('colors.indigo.600');
-            font-weight: bold;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>Admin Panel - SLR Group</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
 
-    <header class="bg-white shadow p-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-indigo-700">SLR Group Admin Dashboard</h1>
-        <button id="logoutBtn" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Logout</button>
-    </header>
+  <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-6" id="loginBox">
+    <h2 class="text-2xl font-bold mb-4 text-center text-indigo-700">Admin Login</h2>
+    <form id="loginForm" class="space-y-4">
+      <input type="text" name="username" placeholder="Username" class="p-3 border rounded w-full" required>
+      <input type="password" name="password" placeholder="Password" class="p-3 border rounded w-full" required>
+      <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-xl w-full hover:bg-indigo-700">
+        Login
+      </button>
+      <p id="loginMsg" class="text-red-600 font-semibold text-center"></p>
+    </form>
+  </div>
 
-    <main class="flex-1 p-8">
-        <div class="bg-white rounded-xl shadow-lg p-6">
-            <div class="flex border-b border-gray-200 mb-6">
-                <button id="hospitalTab" class="py-2 px-4 transition-colors duration-200 active-tab">Hospital</button>
-                <button id="schoolTab" class="py-2 px-4 transition-colors duration-200">School</button>
-                <button id="palaceTab" class="py-2 px-4 transition-colors duration-200">Palace</button>
-            </div>
+  <div class="hidden w-full max-w-4xl bg-white rounded-xl shadow-lg p-6" id="adminBox">
+    <h2 class="text-2xl font-bold mb-6 text-indigo-700 text-center">📊 Admin Dashboard</h2>
+    <table class="w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-indigo-600 text-white">
+          <th class="p-3 border border-gray-300">Type</th>
+          <th class="p-3 border border-gray-300">Data</th>
+        </tr>
+      </thead>
+      <tbody id="adminData"></tbody>
+    </table>
+  </div>
 
-            <div id="hospitalTableContainer" class="table-container">
-                <h2 class="text-xl font-semibold mb-4 text-indigo-700">Hospital Appointments</h2>
-                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
-                    <thead class="bg-indigo-100">
-                        <tr>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Name</th>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Problem</th>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="hospitalTableBody">
-                        </tbody>
-                </table>
-            </div>
+  <script>
+    const API_BASE = "https://slrgroup-backend.onrender.com"; // <- apna Render backend URL yaha daalo
+    let token = null;
 
-            <div id="schoolTableContainer" class="table-container hidden">
-                <h2 class="text-xl font-semibold mb-4 text-green-700">School Enquiries</h2>
-                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
-                    <thead class="bg-green-100">
-                        <tr>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Parent Name</th>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Student Name</th>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Grade</th>
-                        </tr>
-                    </thead>
-                    <tbody id="schoolTableBody">
-                        </tbody>
-                </table>
-            </div>
+    const loginForm = document.getElementById("loginForm");
+    const loginBox = document.getElementById("loginBox");
+    const adminBox = document.getElementById("adminBox");
+    const loginMsg = document.getElementById("loginMsg");
+    const adminData = document.getElementById("adminData");
 
-            <div id="palaceTableContainer" class="table-container hidden">
-                <h2 class="text-xl font-semibold mb-4 text-purple-700">Palace Bookings</h2>
-                <table class="min-w-full bg-white border border-gray-200 rounded-lg">
-                    <thead class="bg-purple-100">
-                        <tr>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Name</th>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Occasion</th>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Date</th>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Guests</th>
-                            <th class="py-2 px-4 border-b text-left text-sm font-medium text-gray-700">Mobile</th>
-                        </tr>
-                    </thead>
-                    <tbody id="palaceTableBody">
-                        </tbody>
-                </table>
-            </div>
+    // ✅ Login Submit
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = Object.fromEntries(new FormData(loginForm).entries());
 
-        </div>
-    </main>
-
-    <script>
-        const API_BASE = "https://slrgroup-backend.onrender.com"; // Use the Render URL
-        const token = localStorage.getItem("adminToken");
-
-        const hospitalTab = document.getElementById("hospitalTab");
-        const schoolTab = document.getElementById("schoolTab");
-        const palaceTab = document.getElementById("palaceTab");
-
-        const hospitalContainer = document.getElementById("hospitalTableContainer");
-        const schoolContainer = document.getElementById("schoolTableContainer");
-        const palaceContainer = document.getElementById("palaceTableContainer");
-
-        const hospitalTableBody = document.getElementById("hospitalTableBody");
-        const schoolTableBody = document.getElementById("schoolTableBody");
-        const palaceTableBody = document.getElementById("palaceTableBody");
-        const logoutBtn = document.getElementById("logoutBtn");
-
-        if (!token) {
-            window.location.href = "adminlogin.html"; // Not logged in
-        }
-
-        // Event listeners for tabs
-        hospitalTab.addEventListener("click", () => showTable('hospital'));
-        schoolTab.addEventListener("click", () => showTable('school'));
-        palaceTab.addEventListener("click", () => showTable('palace'));
-
-        function showTable(service) {
-            // Hide all containers and remove active class from all tabs
-            hospitalContainer.classList.add("hidden");
-            schoolContainer.classList.add("hidden");
-            palaceContainer.classList.add("hidden");
-
-            hospitalTab.classList.remove("active-tab");
-            schoolTab.classList.remove("active-tab");
-            palaceTab.classList.remove("active-tab");
-
-            // Show the selected container and add active class to its tab
-            if (service === 'hospital') {
-                hospitalContainer.classList.remove("hidden");
-                hospitalTab.classList.add("active-tab");
-            } else if (service === 'school') {
-                schoolContainer.classList.remove("hidden");
-                schoolTab.classList.add("active-tab");
-            } else if (service === 'palace') {
-                palaceContainer.classList.remove("hidden");
-                palaceTab.classList.add("active-tab");
-            }
-        }
-
-        async function loadData() {
-            try {
-                const res = await fetch(`${API_BASE}/api/admin/all`, {
-                    headers: { "Authorization": `Bearer ${token}` }
-                });
-
-                if (res.status === 401) {
-                    localStorage.removeItem("adminToken");
-                    window.location.href = "adminlogin.html";
-                    return;
-                }
-
-                const data = await res.json();
-                
-                // Populate tables with data
-                populateTable(hospitalTableBody, data.hospital, 'hospital');
-                populateTable(schoolTableBody, data.school, 'school');
-                populateTable(palaceTableBody, data.palace, 'palace');
-
-            } catch (error) {
-                console.error("Error loading data:", error);
-            }
-        }
-
-        function populateTable(tableBody, data, service) {
-            tableBody.innerHTML = '';
-            if (!data || data.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-gray-500">No data available.</td></tr>`;
-                return;
-            }
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                row.classList.add('hover:bg-gray-50', 'transition-colors');
-                if (service === 'hospital') {
-                    row.innerHTML = `
-                        <td class="py-2 px-4 border-b">${item.name}</td>
-                        <td class="py-2 px-4 border-b">${item.doctor}</td>
-                        <td class="py-2 px-4 border-b">${item.date}</td>
-                    `;
-                } else if (service === 'school') {
-                    row.innerHTML = `
-                        <td class="py-2 px-4 border-b">${item.parent}</td>
-                        <td class="py-2 px-4 border-b">${item.student}</td>
-                        <td class="py-2 px-4 border-b">${item.grade}</td>
-                    `;
-                } else if (service === 'palace') {
-                    row.innerHTML = `
-                        <td class="py-2 px-4 border-b">${item.name}</td>
-                        <td class="py-2 px-4 border-b">${item.occation}</td>
-                        <td class="py-2 px-4 border-b">${item.date}</td>
-                        <td class="py-2 px-4 border-b">${item.guests}</td>
-                        <td class="py-2 px-4 border-b">${item.mobileNumber}</td>
-                    `;
-                }
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Logout functionality
-        logoutBtn.addEventListener("click", () => {
-            localStorage.removeItem("adminToken");
-            window.location.href = "adminlogin.html";
+      try {
+        const res = await fetch(`${API_BASE}/api/admin/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
         });
 
-        // Initial load
-        loadData();
-        showTable('hospital'); // Show hospital data by default
-    </script>
+        if (!res.ok) throw new Error("Invalid credentials");
+
+        const data = await res.json();
+        token = data.token;
+
+        // ✅ Hide login, show admin dashboard
+        loginBox.classList.add("hidden");
+        adminBox.classList.remove("hidden");
+
+        fetchAdminData();
+      } catch (err) {
+        loginMsg.innerText = "❌ " + err.message;
+      }
+    });
+
+    // ✅ Fetch Admin Data
+    async function fetchAdminData() {
+      try {
+        const res = await fetch(`${API_BASE}/api/admin/all`, {
+          headers: { Authorization: "Bearer " + token },
+        });
+
+        const data = await res.json();
+        adminData.innerHTML = "";
+
+        Object.keys(data).forEach((key) => {
+          adminData.innerHTML += `
+            <tr>
+              <td class="p-3 border border-gray-300 font-bold">${key}</td>
+              <td class="p-3 border border-gray-300">${JSON.stringify(data[key])}</td>
+            </tr>
+          `;
+        });
+      } catch (err) {
+        alert("Error fetching admin data: " + err.message);
+      }
+    }
+  </script>
 </body>
 </html>
