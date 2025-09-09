@@ -5,48 +5,44 @@
   <title>SLR Public School</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-
-  <!-- NAVBAR -->
-  <header class="bg-green-700 text-white p-4 text-center text-2xl font-bold">
-    SLR Public School
-  </header>
-
-  <!-- FORM -->
-  <main class="flex-1 flex items-center justify-center p-6">
-    <form id="schoolForm" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full space-y-4">
-      <h2 class="text-2xl font-bold text-center mb-4">Admission Enquiry</h2>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-6">
+  <div class="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full">
+    <h2 class="text-2xl font-bold text-center mb-6">🎓 Admission Enquiry</h2>
+    <form id="schoolForm" class="space-y-4">
       <input type="text" name="parent" placeholder="Parent Name" class="p-3 border rounded w-full" required>
       <input type="text" name="student" placeholder="Student Name" class="p-3 border rounded w-full" required>
       <input type="number" name="grade" placeholder="Grade Applying For" class="p-3 border rounded w-full" required>
-      <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-2xl w-full">
+      <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-xl w-full">
         Submit Enquiry
       </button>
-      <p id="schoolMsg" class="text-green-600 font-semibold text-center"></p>
+      <p id="schoolMsg" class="text-center font-semibold"></p>
     </form>
-  </main>
-
-  <footer class="bg-white text-gray-700 text-center py-4">
-    &copy; 2025 SLR Group. All rights reserved.
-  </footer>
+  </div>
 
   <script>
     const API_BASE = "https://slrgroup-backend.onrender.com";
-    const form = document.getElementById("schoolForm");
 
-    form.addEventListener("submit", async (e) => {
+    document.getElementById("schoolForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const formData = Object.fromEntries(new FormData(form).entries());
-      const res = await fetch(`${API_BASE}/api/school/enquiries`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      document.getElementById("schoolMsg").innerText = data.message;
-      form.reset();
+      const formData = Object.fromEntries(new FormData(e.target).entries());
+
+      try {
+        const res = await fetch(`${API_BASE}/api/school/enquiries`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+
+        if (!res.ok) throw new Error("Failed to submit enquiry");
+
+        document.getElementById("schoolMsg").innerText = "✅ Enquiry successfully submitted!";
+        document.getElementById("schoolMsg").className = "text-green-600 font-bold text-center";
+        e.target.reset();
+      } catch (err) {
+        document.getElementById("schoolMsg").innerText = "❌ Error: " + err.message;
+        document.getElementById("schoolMsg").className = "text-red-600 font-bold text-center";
+      }
     });
   </script>
 </body>
 </html>
-
