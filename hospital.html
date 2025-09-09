@@ -5,48 +5,44 @@
   <title>Shri Lalaram Hospital</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
-
-  <!-- NAVBAR -->
-  <header class="bg-indigo-700 text-white p-4 text-center text-2xl font-bold">
-    Shri Lalaram Hospital
-  </header>
-
-  <!-- FORM -->
-  <main class="flex-1 flex items-center justify-center p-6">
-    <form id="hospitalForm" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full space-y-4">
-      <h2 class="text-2xl font-bold text-center mb-4">Book Appointment</h2>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-6">
+  <div class="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full">
+    <h2 class="text-2xl font-bold text-center mb-6">🏥 Book Appointment</h2>
+    <form id="hospitalForm" class="space-y-4">
       <input type="text" name="name" placeholder="Your Name" class="p-3 border rounded w-full" required>
-      <input type="text" name="doctor" placeholder="Describe your problem" class="p-3 border rounded w-full" required>
+      <input type="text" name="doctor" placeholder="Doctor Name" class="p-3 border rounded w-full" required>
       <input type="date" name="date" class="p-3 border rounded w-full" required>
-      <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-2xl w-full">
-        Book Now
+      <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-xl w-full">
+        Book Appointment
       </button>
-      <p id="hospitalMsg" class="text-green-600 font-semibold text-center"></p>
+      <p id="hospitalMsg" class="text-center font-semibold"></p>
     </form>
-  </main>
-
-  <footer class="bg-white text-gray-700 text-center py-4">
-    &copy; 2025 SLR Group. All rights reserved.
-  </footer>
+  </div>
 
   <script>
     const API_BASE = "https://slrgroup-backend.onrender.com";
-    const form = document.getElementById("hospitalForm");
 
-    form.addEventListener("submit", async (e) => {
+    document.getElementById("hospitalForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const formData = Object.fromEntries(new FormData(form).entries());
-      const res = await fetch(`${API_BASE}/api/hospital/appointments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      document.getElementById("hospitalMsg").innerText = data.message;
-      form.reset();
+      const formData = Object.fromEntries(new FormData(e.target).entries());
+
+      try {
+        const res = await fetch(`${API_BASE}/api/hospital/appointments`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+
+        if (!res.ok) throw new Error("Failed to book appointment");
+
+        document.getElementById("hospitalMsg").innerText = "✅ Appointment successfully booked!";
+        document.getElementById("hospitalMsg").className = "text-green-600 font-bold text-center";
+        e.target.reset();
+      } catch (err) {
+        document.getElementById("hospitalMsg").innerText = "❌ Error: " + err.message;
+        document.getElementById("hospitalMsg").className = "text-red-600 font-bold text-center";
+      }
     });
   </script>
 </body>
 </html>
-
